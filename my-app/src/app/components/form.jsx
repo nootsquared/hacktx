@@ -4,6 +4,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 
 const Form = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]); // To store actual file objects
+  const [creditScore, setCreditScore] = useState(0);
   const [dragOver, setDragOver] = useState(false);
   const [errors, setErrors] = useState([]);
   const [progress, setProgress] = useState(0);
@@ -30,6 +31,9 @@ const Form = () => {
 
   // --- End Helper Functions ---
 
+  const handleCreditScoreChange = (e) => {
+    setCreditScore(e.target.value);
+  }
 
   const handleFiles = useCallback(async (fileList) => {
     setErrors([]);
@@ -88,7 +92,9 @@ const Form = () => {
   return (
     <form onSubmit={handleSubmit} className="p-6 bg-white rounded-lg shadow-md max-w-lg mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-gray-900">Upload Tax Forms</h2> {/* Adjusted text color */}
-
+      <label className="dz-title text-xl font-semibold text-gray-900 mb-2" >Enter your credit score: </label>
+      <input type = "number" value = {creditScore} onChange = {handleCreditScoreChange} className="dz-title text-xl font-semibold text-gray-900 mb-2" /> <br></br>
+      
       {/* Drag & Drop Area */}
       <div
         className={`dropzone border-2 border-dashed rounded-xl p-8 transition-all text-center ${
