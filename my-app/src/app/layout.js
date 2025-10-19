@@ -22,7 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} ${montserrat.variable} antialiased`}>
+      <body suppressHydrationWarning className={`${roboto.variable} ${montserrat.variable} antialiased`}>
         <Navbar />
         {children}
       </body>
