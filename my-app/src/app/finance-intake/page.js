@@ -22,6 +22,7 @@ export default function FinanceIntakePage() {
   const [modelId, setModelId] = useState(catalog[categories[0]][0].id);
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [modelIn, setModelIn] = useState(null);
 
   const models = useMemo(() => catalog[cat] || [], [cat]);
   const selected = useMemo(() => models.find((m) => m.id === modelId) || models[0], [models, modelId]);
@@ -39,10 +40,7 @@ export default function FinanceIntakePage() {
     };
     try { sessionStorage.setItem("finance:intake", JSON.stringify(intake)); } catch {}
     const formData = new FormData();
-    const modelIn = {
-      creditScore: credit,
-      payStub: payStubMeta
-    }
+    
     formData.append("file", file);
     setProcessing(true);
     let p = 0;
@@ -58,7 +56,21 @@ export default function FinanceIntakePage() {
       throw new Error(`Server error: ${res.status}`);
     }
     const data = await res.json();
-    console.log("Parsed Data:", data.parsed_data); // Parsed JSON from Gemini
+    let jsonString = data.parsed_data.replace(/```json\n|\n```/g, '');
+    
+    // 3. Parse the cleaned string into a JavaScript object.
+    const parsedObject = JSON.parse(jsonString);
+    
+    // 4. Add the credit score to the object.
+    parsedObject.credit_score = credit;
+    
+    // 5. (Optional but good practice) Update the original data structure.
+    // This combines the parsed data and credit score into one object.
+    setModelIn(parsedObject);
+    // data.credit_score = credit;
+    // setModelIn(data);
+    // console.log(data);
+    console.log("Parsed Data:", parsedObject); // Parsed JSON from Gemini
     alert("Parsing complete! Check console for results.");
       setProgress(100);
     setTimeout(() => {
