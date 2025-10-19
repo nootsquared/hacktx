@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useMemo, useState } from "react";
@@ -218,6 +219,7 @@ const brandPillars = [
 ];
 
 const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
+
 
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
