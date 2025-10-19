@@ -3,10 +3,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import PaymentSimulation from '@/app/components/PaymentSimulation.jsx';
+// --- NEW: Import the AgentChat component ---
+import { AgentChat } from '@/app/components/AgentChat 2.jsx';
 
 // Fully self‑contained Finance Dashboard, light theme with frosted cards + red hue.
 export default function DashboardPage() {
   const params = useSearchParams();
+
+  // --- NEW: State to manage the AI chat drawer visibility ---
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Vehicle params from Finance gate (fallbacks if someone lands directly)
   const vehicleData = useMemo(() => {
@@ -42,7 +47,7 @@ export default function DashboardPage() {
         }
       }
     } catch {}
-  }, []);
+  }, [plans]); // Added plans to dependency array
 
   const toAdvanced = (plan) => {
     setSelected(plan);
@@ -98,7 +103,6 @@ export default function DashboardPage() {
           <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-red-200/60 bg-white/80 px-3 py-1.5 text-xs text-neutral-700 shadow-sm backdrop-blur-md">
             <span className="font-medium">Credit Score</span>
             <span className="rounded-full bg-red-100 px-2 py-0.5 text-red-600">{creditScore}</span>
-
           </div>
         </header>
         {AdvancedToggle}
@@ -159,7 +163,6 @@ export default function DashboardPage() {
         {/* Advanced: cards shrink to top + charts/simulations appear */}
         {mode === 'advanced' && (
           <div className="space-y-6">
-            {/* Centered mini selectors under toggle */}
             <div className="flex flex-wrap items-center justify-center gap-3">
               {plans.map((p) => (
                 <button
@@ -176,7 +179,6 @@ export default function DashboardPage() {
               ))}
             </div>
 
-            {/* Clean horizontal simulation: sliders left, graph right */}
             <div>
               <h3 className="mb-3 text-center text-lg font-semibold">Simulation</h3>
               <PaymentSimulation
@@ -191,6 +193,38 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+
+      {/* --- NEW: Floating Action Button for AI Agent --- */}
+      <button
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-8 right-8 z-50 bg-red-600 text-white rounded-full p-4 shadow-lg transition-transform hover:scale-110 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+        aria-label="Open AI Assistant"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      </button>
+
+      {/* --- NEW: AI Agent Chat Drawer --- */}
+      <div 
+        className={`fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out
+                   ${isChatOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        <div className="relative h-full">
+           <button 
+             onClick={() => setIsChatOpen(false)}
+             className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+             aria-label="Close chat"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+           </button>
+           <AgentChat modelDataContext={{ summary: { text: `Financing plan for ${vehicleData.model}` }}} />
+        </div>
+      </div>
+      {/* --- NEW: Overlay for when chat is open --- */}
+      {isChatOpen && <div onClick={() => setIsChatOpen(false)} className="fixed inset-0 bg-black/30 z-40"></div>}
     </div>
   );
 }
