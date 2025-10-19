@@ -158,14 +158,14 @@ export default function FinanceIntakePage() {
           <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <label className="block text-sm mb-1">Vehicle Category</label>
-              <select value={cat} onChange={(e)=>{ setCat(e.target.value); setModelId(catalog[e.target.value][0].id); }} className="w-full rounded-md border border-white/15 bg-white/5 px-3 py-2 text-sm">
-                {categories.map((k) => (<option key={k} value={k} className="bg-neutral-900">{k}</option>))}
+              <select value={cat} onChange={(e)=>{ setCat(e.target.value); setModelId(catalog[e.target.value][0].id); }} className="w-full appearance-none rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900">
+                {categories.map((k) => (<option key={k} value={k}>{k}</option>))}
               </select>
             </div>
             <div>
               <label className="block text-sm mb-1">Model</label>
-              <select value={modelId} onChange={(e)=>setModelId(e.target.value)} className="w-full rounded-md border border-white/15 bg-white/5 px-3 py-2 text-sm">
-                {models.map((m) => (<option key={m.id} value={m.id} className="bg-neutral-900">{m.name} — ${m.msrp.toLocaleString()}</option>))}
+              <select value={modelId} onChange={(e)=>setModelId(e.target.value)} className="w-full appearance-none rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900">
+                {models.map((m) => (<option key={m.id} value={m.id}>{m.name} — ${m.msrp.toLocaleString()}</option>))}
               </select>
             </div>
           </div>

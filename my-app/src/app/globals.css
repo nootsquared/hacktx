@@ -421,6 +421,13 @@
   color: rgba(17, 17, 17, 0.55);
 }
 
+/* Normalize native selects across browsers when opting out of UA styling */
+select.appearance-none {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 .hero-selector-subline {
   font-size: 0.75rem;
   letter-spacing: 0.18em;
