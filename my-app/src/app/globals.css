@@ -199,6 +199,50 @@
   box-shadow: 0 38px 110px -60px rgba(214, 0, 0, 0.45);
 }
 
+/* Finance dashboard: simulation sliders + buttons */
+.sim-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(239,68,68,0.6), rgba(239,68,68,0.2));
+  outline: none;
+}
+.sim-range:disabled { opacity: 0.6; }
+.sim-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 2px solid #ef4444;
+  box-shadow: 0 4px 10px rgba(239,68,68,0.25);
+  cursor: pointer;
+}
+.sim-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 2px solid #ef4444;
+  box-shadow: 0 4px 10px rgba(239,68,68,0.25);
+  cursor: pointer;
+}
+
+.sim-button {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+.sim-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -8px rgba(239,68,68,0.35);
+  border-color: rgba(239,68,68,0.4) !important;
+}
+
 .model-chip-badge {
   font-size: 0.65rem;
   letter-spacing: 0.5em;
@@ -375,6 +419,13 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(17, 17, 17, 0.55);
+}
+
+/* Normalize native selects across browsers when opting out of UA styling */
+select.appearance-none {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .hero-selector-subline {

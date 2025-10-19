@@ -1,8 +1,10 @@
+
 "use client";
 
 import { useMemo, useState } from "react";
 
 import CarModel from "./components/CarModel";
+import Link from "next/link";
 
 const garageModels = [
   {
@@ -150,51 +152,51 @@ const garageModels = [
     },
   },
   {
-    id: "supra",
-    badge: "GR",
-    name: "Supra GT",
-    tagline: "Grand tourer with racing DNA",
+    id: "tacoma",
+    badge: "TRD",
+    name: "Tacoma",
+    tagline: "Midsize truck, built for adventure",
     theme: {
-      accent: "#F5B301",
-      accentSoft: "rgba(245, 179, 1, 0.18)",
-      accentDeep: "rgba(245, 179, 1, 0.5)",
+      accent: "#0B6E4F",
+      accentSoft: "rgba(11, 110, 79, 0.18)",
+      accentDeep: "rgba(11, 110, 79, 0.5)",
     },
     src: "/models/2022%20Toyota%20GR86%203D%20Model.glb",
     heroCopy:
-      "Twin-scroll boost, adaptive aero, and GR calibration turn every expressway into a proving ground. Supra GT is Toyota's legend evolved.",
+      "Body-on-frame toughness with multi-terrain smarts. Tacoma brings trail-ready hardware and everyday versatility to wherever your path leads.",
     heroView: {
-      cameraOrbit: "-32deg 66deg 1.14m",
+      cameraOrbit: "-28deg 66deg 1.18m",
       cameraTarget: "0m -0.03m 0m",
-      fieldOfView: "18deg",
+      fieldOfView: "19deg",
   rotationPerSecond: "14deg",
       stageHeightVh: 84,
       stageMaxWidth: "1120px",
     },
     spotlight: {
-      heading: "Engineered for long-haul pace",
+      heading: "Capability that fits your everyday",
       summary:
-        "Adaptive dampers, active differential, and a cockpit wrapped in carbon accents make Supra GT the flagship of Toyota's performance roster.",
+        "From jobsite to campsite, Tacoma's available lockers, drive modes, and durable composite bed make it the do‑it‑all midsize.",
       metrics: [
-        { label: "0-60 mph", value: "3.9 s", detail: "Sport+ launch" },
-        { label: "Power", value: "382 hp", detail: "Turbo inline-six" },
-        { label: "Torque", value: "368 lb-ft", detail: "1,800-5,000 rpm" },
-        { label: "Top speed", value: "155 mph", detail: "Electronically limited" },
+        { label: "Towing", value: "6,500 lb", detail: "Properly equipped" },
+        { label: "Payload", value: "1,685 lb", detail: "Max rating" },
+        { label: "Clearance", value: "9.4 in", detail: "Approach-ready" },
+        { label: "Power", value: "Up to 326 hp", detail: "i-FORCE MAX" },
       ],
       highlights: [
         {
-          title: "Adaptive aero",
-          description: "Real-time deck-lid adjustments keep stability locked at speed.",
+          title: "Multi‑Terrain Select",
+          description: "Dialed traction modes optimize throttle and braking for sand, mud, or rocks.",
         },
         {
-          title: "GR cockpit",
-          description: "Alcantara bolsters and forged carbon set the tone for long stints.",
+          title: "Composite bed + tie‑downs",
+          description: "Integrated rails and a dent-resistant bed make hauling easy and durable.",
         },
         {
-          title: "Active differential",
-          description: "Variable locking diff cues up traction exiting every bend.",
+          title: "Crawl Control + locker",
+          description: "Available low‑speed cruise and locking rear differential tackle steep sections with confidence.",
         },
       ],
-      msrp: "$45,540*",
+      msrp: "$31,300*",
     },
   },
 ];
@@ -218,6 +220,7 @@ const brandPillars = [
 ];
 
 const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
+
 
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -394,6 +397,14 @@ function ScrollCue({ label }) {
 function GarageSpotlight({ model }) {
   if (!model?.spotlight) return null;
   const { theme, spotlight } = model;
+  const msrpNumber = useMemo(() => {
+    try {
+      const digits = String(spotlight.msrp || "").replace(/[^0-9]/g, "");
+      return digits ? Number(digits) : undefined;
+    } catch {
+      return undefined;
+    }
+  }, [spotlight.msrp]);
 
   return (
     <section className="relative -mt-[24vh] bg-gradient-to-b from-white via-neutral-50 to-neutral-100 pb-24 pt-28">
@@ -451,6 +462,23 @@ function GarageSpotlight({ model }) {
                     background: `linear-gradient(90deg, ${(theme?.accentSoft ?? "rgba(225,6,0,0.25)")}, ${theme?.accent}, transparent)`,
                   }}
                 />
+              </div>
+
+              <div className="mt-6">
+                <Link
+                  href={{
+                    pathname: "/finance-intake",
+                    query: {
+                      model: model.id,
+                      name: model.name,
+                      ...(msrpNumber ? { msrp: msrpNumber } : {}),
+                    },
+                  }}
+                  className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2"
+                  style={{ backgroundColor: theme?.accent }}
+                >
+                  Start Finance Pre‑Check
+                </Link>
               </div>
             </div>
           </div>

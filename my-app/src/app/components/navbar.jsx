@@ -1,8 +1,10 @@
 "use client";
 
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
+import { Label } from "recharts";
 
 const HomeIcon = (props) => (
   <svg
@@ -85,7 +87,11 @@ const AccountIcon = (props) => (
 
 const Navbar = () => {
   const pathname = usePathname();
-  const routeTab = useMemo(() => (pathname === "/finance" ? "finance" : "browse"), [pathname]);
+  const routeTab = useMemo(() => (
+    pathname && (pathname.startsWith("/finance") || pathname.startsWith("/dashboard"))
+      ? "finance"
+      : "browse"
+  ), [pathname]);
   const [hoverTab, setHoverTab] = useState(null);
   const activeTab = hoverTab ?? routeTab;
 
@@ -123,7 +129,7 @@ const Navbar = () => {
                 Browse
               </Link>
               <Link
-                href="/dashboard"
+                href="/finance-intake"
                 onMouseEnter={() => setHoverTab("finance")}
                 className={`flex items-center justify-center rounded-lg px-3 py-1.5 transition-colors duration-200 ${
                   activeTab === "finance" ? "text-black dark:text-white" : "hover:text-foreground"
@@ -131,17 +137,21 @@ const Navbar = () => {
               >
                 Finance
               </Link>
+              
             </div>
+            
           </div>
-
-          {/* Right account icon */}
-          <Link
-            href="/dashboard"
-            aria-label="Account"
-            className="text-foreground/90 hover:text-foreground transition-colors"
-          >
-            <AccountIcon className="h-6 w-6" />
-          </Link>
+                <Link
+                href="/aboutPage"
+                onMouseEnter={() => setHoverTab("browse")}
+                className={`flex items-center justify-center rounded-lg px-3 py-1.5 transition-colors duration-200 ${
+                  activeTab === "browse" ? "text-black dark:text-white" : "hover:text-foreground"
+                }`}
+              >
+                <AccountIcon className="h-6 w-6" />
+              </Link>
+          
+          
         </div>
       </nav>
     </div>
@@ -149,3 +159,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
