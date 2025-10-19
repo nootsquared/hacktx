@@ -1,84 +1,60 @@
 'use client';
-import { useState, useEffect } from "react";
-import { MyChart } from "@/app/components/chart.jsx";
-import { InfoCard } from "@/app/components/InfoCard.jsx";
-import { SummaryCard } from "@/app/components/SummaryCard.jsx";
+import { useState } from "react";
 import Navbar from "@/app/components/navbar.jsx";
-import { AgentChat } from "@/app/components/AgentChat.jsx";
+import { PlanSelectionView } from "@/app/components/PlanSelectionView.jsx";
+import { JourneyMapView } from "@/app/components/JourneyMapView.jsx";
 
-// This is the main page that combines the dashboard and the AI agent.
+// This is the main page that manages the two primary states of the app.
 export default function DashboardPage() {
-  const [modelData, setModelData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState('selection'); // 'selection' or 'journey'
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
-  // --- Simulate fetching data from your ML model backend ---
-  useEffect(() => {
-    // In a real application, you would fetch this data from an API endpoint
-    // that communicates with your Python/ML backend.
-    const fetchModelData = () => {
-      setLoading(true);
-      setTimeout(() => {
-        setModelData({
-          summary: {
-            title: "Model Summary",
-            text: "The model analyzed 15,000 data points related to consumer behavior and vehicle performance. Key indicators suggest a 25% increase in demand for electric vehicles with a range over 300 miles. The primary contributing factors include rising fuel costs and improved charging infrastructure. The confidence score for this prediction is 92%.",
-          },
-          recommendation: {
-            src: "https://placehold.co/600x400/000000/FFFFFF?text=Vehicle+Match",
-            alt: "A modern electric car",
-            title: "Predicted Best Match",
-            description: "Based on current market trends, the model suggests this vehicle profile as the optimal choice.",
-          },
-          performance: [
-            { month: "January", value: 186 },
-            { month: "February", value: 305 },
-            { month: "March", value: 237 },
-            { month: "April", value: 273 },
-            { month: "May", value: 209 },
-            { month: "June", value: 214 },
-          ],
-        });
-        setLoading(false);
-      }, 1500); // Simulate network delay
-    };
+  // --- Mock data for the vehicle and financing plans ---
+  const vehicleData = {
+    model: "Toyota GR86",
+    msrp: 28400,
+  };
 
-    fetchModelData();
-  }, []);
+  const initialPlans = [
+    { id: 1, name: "Best Value", term: 60, apr: 5.5, price: vehicleData.msrp, downPayment: 4000 },
+    { id: 2, name: "Low Payment", term: 72, apr: 6.5, price: vehicleData.msrp, downPayment: 2500 },
+    { id: 3, name: "Own It Faster", term: 48, apr: 4.9, price: vehicleData.msrp, downPayment: 5000 },
+  ];
 
-  if (loading) {
-    return (
-        <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
-            <Navbar />
-            <main className="flex-1 flex items-center justify-center">
-                <div className="text-center">
-                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">Loading Model Data...</p>
-                </div>
-            </main>
-        </div>
-    )
-  }
+  // This function is called from the PlanSelectionView when a user finalizes a plan.
+  const handlePlanSelect = (planData) => {
+    setSelectedPlan(planData);
+    setViewMode('journey'); // Transition to the journey map view
+  };
+
+  // This function is called from the JourneyMapView to switch which plan is displayed
+  // or to go back to the main selection screen.
+  const handleViewChange = (newPlan) => {
+    if (newPlan) {
+      setSelectedPlan(newPlan);
+    } else {
+      // If no new plan is provided, go back to the selection view
+      setViewMode('selection');
+    }
+  };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="flex flex-col min-h-screen bg-neutral-900 text-white font-sans">
       <Navbar />
-      
-      <main className="flex-1 p-4 md:p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto w-full">
-          {/* Column 1: Dashboard Components */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <h1 className="text-3xl font-bold">Your Financing Plan</h1>
-            <SummaryCard data={modelData.summary} />
-            <InfoCard data={modelData.recommendation} />
-            <MyChart data={modelData.performance} />
-          </div>
-
-          {/* Column 2: AI Agent Chat */}
-          <div className="lg:col-span-1">
-             <AgentChat modelDataContext={modelData} />
-          </div>
-        </div>
+      <main className="flex-1 p-4 md:p-8">
+        {viewMode === 'selection' ? (
+          <PlanSelectionView
+            initialPlans={initialPlans}
+            onPlanSelect={handlePlanSelect}
+          />
+        ) : (
+          <JourneyMapView
+            allPlans={initialPlans}
+            activePlan={selectedPlan}
+            onViewChange={handleViewChange}
+          />
+        )}
       </main>
     </div>
   );
 }
-
