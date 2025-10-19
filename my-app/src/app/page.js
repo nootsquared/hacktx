@@ -327,7 +327,7 @@ function HeroModelStage({ model, heroView, onPrev, onNext, hasMultiple }) {
             type="button"
             onClick={onPrev}
             aria-label="Previous model"
-            className="absolute left-2 top-[20%] z-40 -translate-y-1/2 rounded-full border border-neutral-200 bg-white/95 p-3 text-neutral-900 shadow-md backdrop-blur-lg transition hover:-translate-y-1/2 hover:scale-105 hover:shadow-lg active:scale-95 sm:left-4 cursor-pointer"
+            className="absolute left-2 top-[20%] z-40 -translate-y-1/2 rounded-full cursor-pointer border border-neutral-200 bg-white/95 p-3 text-neutral-900 shadow-md backdrop-blur-lg transition hover:-translate-y-1/2 hover:scale-105 hover:shadow-lg active:scale-95 sm:left-4 cursor-pointer"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <polyline points="15 18 9 12 15 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -337,7 +337,7 @@ function HeroModelStage({ model, heroView, onPrev, onNext, hasMultiple }) {
             type="button"
             onClick={onNext}
             aria-label="Next model"
-            className="absolute right-2 top-[20%] z-40 -translate-y-1/2 rounded-full border border-neutral-200 bg-white/95 p-3 text-neutral-900 shadow-md backdrop-blur-lg transition hover:-translate-y-1/2 hover:scale-105 hover:shadow-lg active:scale-95 sm:right-4"
+            className="absolute right-2 top-[20%] z-40 -translate-y-1/2 cursor-pointer rounded-full border border-neutral-200 bg-white/95 p-3 text-neutral-900 shadow-md backdrop-blur-lg transition hover:-translate-y-1/2 hover:scale-105 hover:shadow-lg active:scale-95 sm:right-4"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <polyline points="9 18 15 12 9 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
