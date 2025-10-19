@@ -98,20 +98,10 @@ export default function CarModel({
   }
 
   return (
-    <div className={`relative z-10 flex w-full justify-center ${className}`}>
+    <div className={`relative z-10 flex w-full justify-center ${className}`} style={{ marginBottom: '-50vh' }}>
       <div className="model-stage relative" style={stageStyle}>
         {/* Shadow rendered directly beneath the car model */}
-        <div
-          className="absolute left-1/2 top-[80%] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          style={{
-            width: "340px",
-            height: "80px",
-            background: "radial-gradient(ellipse at center, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0) 100%)",
-            filter: "blur(8px)",
-            opacity: 0.7,
-            zIndex: 1,
-          }}
-        />
+
         {ready ? (
           // eslint-disable-next-line react/no-unknown-property
           <model-viewer
