@@ -127,7 +127,7 @@ const Navbar = () => {
                 Browse
               </Link>
               <Link
-                href="/dashboard"
+                href="/finance-intake"
                 onMouseEnter={() => setHoverTab("finance")}
                 className={`flex items-center justify-center rounded-lg px-3 py-1.5 transition-colors duration-200 ${
                   activeTab === "finance" ? "text-black dark:text-white" : "hover:text-foreground"
