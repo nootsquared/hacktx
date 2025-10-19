@@ -241,22 +241,24 @@ export default function Home() {
 function HeroShowcase({ models, activeIndex, onActiveIndexChange }) {
   const activeModel = models[activeIndex] ?? models[0];
 
+  // Always use GR86's heroView for all models
+  const gr86Model = models.find(m => m.id === "gr86");
   const accentStyles = useMemo(
     () => ({
-      "--hero-accent": activeModel?.theme?.accent ?? "#E10600",
-      "--hero-accent-soft": activeModel?.theme?.accentSoft ?? "rgba(225,6,0,0.25)",
-      "--hero-accent-deep": activeModel?.theme?.accentDeep ?? "rgba(225,6,0,0.45)",
+      "--hero-accent": gr86Model?.theme?.accent ?? "#E10600",
+      "--hero-accent-soft": gr86Model?.theme?.accentSoft ?? "rgba(225,6,0,0.25)",
+      "--hero-accent-deep": gr86Model?.theme?.accentDeep ?? "rgba(225,6,0,0.45)",
     }),
-    [activeModel?.theme?.accent, activeModel?.theme?.accentSoft, activeModel?.theme?.accentDeep],
+    [gr86Model?.theme?.accent, gr86Model?.theme?.accentSoft, gr86Model?.theme?.accentDeep],
   );
 
-  const heroView = activeModel?.heroView || {
-    cameraOrbit: "0deg 68deg 1.24m",
-    cameraTarget: "0m -0.05m 0m",
-    fieldOfView: "20deg",
-    rotationPerSecond: "26deg",
-    stageHeightVh: 84,
-    stageMaxWidth: "1080px",
+  const heroView = gr86Model?.heroView || {
+    cameraOrbit: "0deg 68deg 1.12m",
+    cameraTarget: "0m -0.02m 0m",
+    fieldOfView: "18deg",
+    rotationPerSecond: "32deg",
+    stageHeightVh: 82,
+    stageMaxWidth: "1120px",
   };
 
   const totalModels = models.length;
@@ -309,7 +311,7 @@ function HeroTagline() {
       <div className="brand-tagline-stack">
         <h1 className="brand-tagline-layer brand-tagline-main">
           <span className="block">
-            TOYOTA IS LIFE
+            TOYOTA IS<br />LIFE
             <span className="brand-tagline-period">.</span>
           </span>
         </h1>

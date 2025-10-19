@@ -27,10 +27,10 @@ export default function HeroTagline() {
   return (
     <div ref={ref} className="mx-auto w-fit select-none">
       <div className="hero-panel">
-        <h1 className="hero-tagline" style={style}>
-          <span>TOYOTA&nbsp;IS&nbsp;LIFE</span>
-          <span className="hero-accent">.</span>
-        </h1>
+        <div className="hero-tagline" style={{ ...style, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <span style={{ display: 'block' }}>TOYOTA&nbsp;IS</span>
+          <span style={{ display: 'block' }}>LIFE<span className="hero-accent">.</span></span>
+        </div>
       </div>
     </div>
   );
