@@ -38,19 +38,40 @@ export default function FinanceIntakePage() {
       createdAt: Date.now(),
     };
     try { sessionStorage.setItem("finance:intake", JSON.stringify(intake)); } catch {}
-
+    const formData = new FormData();
+    const modelIn = {
+      creditScore: credit,
+      payStub: payStubMeta
+    }
+    formData.append("file", file);
     setProcessing(true);
     let p = 0;
-    const id = setInterval(() => {
+    try{
       p = Math.min(100, p + Math.floor(6 + Math.random() * 12));
       setProgress(p);
-      if (p >= 100) {
-        clearInterval(id);
-        setTimeout(() => {
-          router.push(`/dashboard?model=${encodeURIComponent(selected.id)}&name=${encodeURIComponent(selected.name)}&msrp=${selected.msrp}&credit=${credit}`);
-        }, 300);
-      }
-    }, 280);
+      const res = await fetch("http://localhost:8000/parse-document", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) {
+      throw new Error(`Server error: ${res.status}`);
+    }
+    const data = await res.json();
+    console.log("Parsed Data:", data.parsed_data); // Parsed JSON from Gemini
+    alert("Parsing complete! Check console for results.");
+      setProgress(100);
+    setTimeout(() => {
+      setProcessing(false); // Hide the modal
+        // Navigate to the dashboard, passing vehicle info as query params
+        router.push(`/dashboard?name=${selected.name}&msrp=${selected.msrp}&credit=${credit}`);
+      }, 1000); // 1-second delay so the user can see 100%
+  
+    }
+    catch(err){
+      console.error(err);
+      setProgress(0);
+    }
   };
 
   useEffect(() => {}, []);
