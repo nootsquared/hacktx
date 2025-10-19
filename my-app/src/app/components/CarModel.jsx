@@ -98,7 +98,7 @@ export default function CarModel({
   }
 
   return (
-    <div className={`relative z-10 flex w-full justify-center ${className}`}>
+    <div className={`relative z-10 flex w-full justify-center ${className}`} style={{ marginBottom: '-50vh' }}>
       <div className="model-stage relative" style={stageStyle}>
         {/* Shadow rendered directly beneath the car model */}
 

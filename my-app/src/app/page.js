@@ -23,7 +23,7 @@ const garageModels = [
       cameraTarget: "0m -0.02m 0m",
       fieldOfView: "18deg",
   rotationPerSecond: "14deg",
-      stageHeightVh: 82,
+      stageHeightVh: 95,
       stageMaxWidth: "1120px",
     },
     spotlight: {
@@ -293,12 +293,6 @@ function HeroShowcase({ models, activeIndex, onActiveIndexChange }) {
             onNext={handleNext}
             hasMultiple={hasMultiple}
           />
-
-          <HeroCarousel
-            models={models}
-            activeIndex={activeIndex}
-            onSelect={onActiveIndexChange}
-          />
         </div>
       </div>
     </section>
@@ -386,34 +380,6 @@ function HeroModelStage({ model, heroView, onPrev, onNext, hasMultiple }) {
   );
 }
 
-function HeroCarousel({ models, activeIndex, onSelect }) {
-  return (
-    <div className="w-full">
-      <div className="flex items-center justify-center gap-3">
-        <span className="text-xs font-semibold uppercase tracking-[0.4em] text-neutral-400">
-          Toyota lineup
-        </span>
-      </div>
-      <div className="mt-3 flex w-full items-stretch justify-center gap-3 overflow-x-auto pb-2">
-        {models.map((model, index) => {
-          const selected = index === activeIndex;
-          return (
-            <button
-              key={model.id}
-              type="button"
-              onClick={() => onSelect(index)}
-              className={`model-chip ${selected ? "is-active" : ""}`}
-            >
-              <span className="model-chip-badge">{model.badge}</span>
-              <span className="model-chip-name">{model.name}</span>
-              <span className="model-chip-tagline">{model.tagline}</span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
 
 function ScrollCue({ label }) {
   return (
