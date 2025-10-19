@@ -16,7 +16,7 @@ const Navbar = () => {
         <ul className="flex space-x-4">
           <li>
             <Link href="/" className = { "text-gray-300 hover:text-white"}>
-              Home
+              Form
             </Link>
           </li>
           <li>
@@ -25,8 +25,8 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link href="/about" className="text-gray-300 hover:text-white">
-              Form
+            <Link href="/carousel" className="text-gray-300 hover:text-white">
+              Plans
             </Link>
           </li>
         </ul>

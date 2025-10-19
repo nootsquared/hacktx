@@ -1,4 +1,3 @@
-
 "use client" // Required for Recharts and hooks
 
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
@@ -15,17 +14,9 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export function MyChart() {
-  // --- Placeholder Data ---
-  // Replace this with data fetched from your ML model's API endpoint
-  const chartData = [
-    { month: "January", value: 186 },
-    { month: "February", value: 305 },
-    { month: "March", value: 237 },
-    { month: "April", value: 273 },
-    { month: "May", value: 209 },
-    { month: "June", value: 214 },
-  ]
+export function MyChart({ data }) {
+  // Now accepts a `data` prop
+  if (!data) return null;
 
   return (
     <Card>
@@ -35,7 +26,7 @@ export function MyChart() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={{}} className="min-h-[200px] w-full">
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={data}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="month"
