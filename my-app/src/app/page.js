@@ -4,6 +4,7 @@
 import { useMemo, useState } from "react";
 
 import CarModel from "./components/CarModel";
+import Link from "next/link";
 
 const garageModels = [
   {
@@ -396,6 +397,14 @@ function ScrollCue({ label }) {
 function GarageSpotlight({ model }) {
   if (!model?.spotlight) return null;
   const { theme, spotlight } = model;
+  const msrpNumber = useMemo(() => {
+    try {
+      const digits = String(spotlight.msrp || "").replace(/[^0-9]/g, "");
+      return digits ? Number(digits) : undefined;
+    } catch {
+      return undefined;
+    }
+  }, [spotlight.msrp]);
 
   return (
     <section className="relative -mt-[24vh] bg-gradient-to-b from-white via-neutral-50 to-neutral-100 pb-24 pt-28">
@@ -453,6 +462,23 @@ function GarageSpotlight({ model }) {
                     background: `linear-gradient(90deg, ${(theme?.accentSoft ?? "rgba(225,6,0,0.25)")}, ${theme?.accent}, transparent)`,
                   }}
                 />
+              </div>
+
+              <div className="mt-6">
+                <Link
+                  href={{
+                    pathname: "/finance-intake",
+                    query: {
+                      model: model.id,
+                      name: model.name,
+                      ...(msrpNumber ? { msrp: msrpNumber } : {}),
+                    },
+                  }}
+                  className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2"
+                  style={{ backgroundColor: theme?.accent }}
+                >
+                  Start Finance Pre‑Check
+                </Link>
               </div>
             </div>
           </div>

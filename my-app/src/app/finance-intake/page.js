@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import catalog from "../finance/catalog.json";
 
 const creditColor = (score) => {
@@ -12,6 +12,7 @@ const creditColor = (score) => {
 
 export default function FinanceIntakePage() {
   const router = useRouter();
+  const params = useSearchParams();
   const categories = Object.keys(catalog);
   const [credit, setCredit] = useState(720);
   const [file, setFile] = useState(null);
@@ -86,7 +87,37 @@ export default function FinanceIntakePage() {
     }
   };
 
-  useEffect(() => {}, []);
+  // Prefill model/category from query params if provided
+  useEffect(() => {
+    try {
+      const qModel = params.get("model");
+      const qName = params.get("name");
+      // Attempt exact id match first
+      if (qModel) {
+        for (const c of categories) {
+          const found = (catalog[c] || []).find((m) => m.id === qModel);
+          if (found) {
+            setCat(c);
+            setModelId(found.id);
+            return;
+          }
+        }
+      }
+      // Fallback: try name match (case-insensitive)
+      if (qName) {
+        const norm = String(qName).trim().toLowerCase();
+        for (const c of categories) {
+          const found = (catalog[c] || []).find((m) => m.name.trim().toLowerCase() === norm);
+          if (found) {
+            setCat(c);
+            setModelId(found.id);
+            return;
+          }
+        }
+      }
+    } catch {}
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
 
   const validateAndSetFile = (f) => {
     setFileError("");
