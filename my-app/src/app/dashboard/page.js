@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import PaymentSimulation from '@/app/components/PaymentSimulation.jsx';
 
@@ -11,13 +11,7 @@ export default function DashboardPage() {
   // Vehicle params from Finance gate (fallbacks if someone lands directly)
   const vehicleData = useMemo(() => {
     const msrp = Number(params.get('msrp')) || 28400;
-    const modelParam = params.get('model');
-    const modelName =
-      modelParam === 'prius-prime'
-        ? 'Toyota Prius Prime'
-        : modelParam === 'corolla-cross'
-        ? 'Toyota Corolla Cross'
-        : 'Toyota GR86';
+    const modelName = params.get('name') || 'Toyota GR86';
     return { model: modelName, msrp };
   }, [params]);
 
@@ -34,6 +28,21 @@ export default function DashboardPage() {
   const [mode, setMode] = useState('summary'); // 'summary' | 'advanced'
   const [selected, setSelected] = useState(plans[0]);
   const creditScore = Number(params.get('credit')) || 720;
+
+  // Try to hydrate from intake if present
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem('finance:intake');
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (data?.vehicle?.msrp && data?.vehicle?.name) {
+          // refresh plans with this MSRP
+          const msrp = Number(data.vehicle.msrp);
+          plans[0].price = plans[1].price = plans[2].price = msrp;
+        }
+      }
+    } catch {}
+  }, []);
 
   const toAdvanced = (plan) => {
     setSelected(plan);
@@ -150,8 +159,8 @@ export default function DashboardPage() {
         {/* Advanced: cards shrink to top + charts/simulations appear */}
         {mode === 'advanced' && (
           <div className="space-y-6">
-            {/* Mini selectors (shrunken cards) */}
-            <div className="flex flex-wrap items-center gap-3">
+            {/* Centered mini selectors under toggle */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
               {plans.map((p) => (
                 <button
                   key={p.id}
@@ -165,28 +174,19 @@ export default function DashboardPage() {
                   {p.name}
                 </button>
               ))}
-              <div className="ml-auto text-xs text-neutral-500">Advanced analysis</div>
             </div>
 
-            {/* Animated container for detail + simulation */}
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="rounded-2xl border border-red-200/50 bg-white/80 p-5 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(239,68,68,0.25)]">
-                <h3 className="mb-2 text-lg font-semibold">Plan Details</h3>
-                <p className="mb-4 text-sm text-neutral-600">
-                  Currently viewing <span className="font-semibold text-red-600">{selected.name}</span>. Values below are locked to the plan defaults.
-                </p>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="rounded-lg border border-red-200/40 bg-white/70 p-2"><div className="text-[11px] text-neutral-500">APR</div><div className="font-medium">{selected.apr}%</div></div>
-                  <div className="rounded-lg border border-red-200/40 bg-white/70 p-2"><div className="text-[11px] text-neutral-500">Term</div><div className="font-medium">{selected.term} months</div></div>
-                  <div className="rounded-lg border border-red-200/40 bg-white/70 p-2"><div className="text-[11px] text-neutral-500">Down Payment</div><div className="font-medium">${selected.downPayment.toLocaleString()}</div></div>
-                  <div className="rounded-lg border border-red-200/40 bg-white/70 p-2"><div className="text-[11px] text-neutral-500">Vehicle Price</div><div className="font-medium">${selected.price.toLocaleString()}</div></div>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-red-200/50 bg-white/80 p-5 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(239,68,68,0.25)]">
-                <h3 className="mb-2 text-lg font-semibold">Simulation</h3>
-                <PaymentSimulation plans={plans} readOnly initialPlanId={selected.id} light />
-              </div>
+            {/* Clean horizontal simulation: sliders left, graph right */}
+            <div>
+              <h3 className="mb-3 text-center text-lg font-semibold">Simulation</h3>
+              <PaymentSimulation
+                plans={plans}
+                readOnly
+                initialPlanId={selected.id}
+                light
+                hidePlanButtons
+                orientation="horizontal"
+              />
             </div>
           </div>
         )}

@@ -1,0 +1,21 @@
+{
+  "Cars": [
+    { "id": "camry", "name": "Camry", "msrp": 26620 },
+    { "id": "corolla", "name": "Corolla", "msrp": 21600 },
+    { "id": "prius-prime", "name": "Prius Prime", "msrp": 32350 }
+  ],
+  "SUVs": [
+    { "id": "rav4", "name": "RAV4", "msrp": 28975 },
+    { "id": "highlander", "name": "Highlander", "msrp": 39470 },
+    { "id": "corolla-cross", "name": "Corolla Cross", "msrp": 24445 }
+  ],
+  "Trucks": [
+    { "id": "tacoma", "name": "Tacoma", "msrp": 31300 },
+    { "id": "tundra", "name": "Tundra", "msrp": 39965 }
+  ],
+  "Performance": [
+    { "id": "gr86", "name": "GR86", "msrp": 28400 },
+    { "id": "supra", "name": "GR Supra", "msrp": 46840 }
+  ]
+}
+
