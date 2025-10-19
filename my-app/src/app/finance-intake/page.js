@@ -30,7 +30,7 @@ export default function FinanceIntakePage() {
 
   const canContinue = credit >= 300 && !!file && !!selected;
 
-  const start = async () => {
+  const start = async (e) => {
     if (!canContinue) return;
     const payStubMeta = file ? { name: file.name, size: file.size, type: file.type } : null;
     const intake = {
@@ -57,21 +57,14 @@ export default function FinanceIntakePage() {
       throw new Error(`Server error: ${res.status}`);
     }
     const data = await res.json();
-    let jsonString = data.parsed_data.replace(/```json\n|\n```/g, '');
-    
-    // 3. Parse the cleaned string into a JavaScript object.
-    const parsedObject = JSON.parse(jsonString);
-    
-    // 4. Add the credit score to the object.
-    parsedObject.credit_score = credit;
     
     // 5. (Optional but good practice) Update the original data structure.
     // This combines the parsed data and credit score into one object.
-    setModelIn(parsedObject);
+    setModelIn(data);
     // data.credit_score = credit;
     // setModelIn(data);
     // console.log(data);
-    console.log("Parsed Data:", parsedObject); // Parsed JSON from Gemini
+    console.log("Parsed Data:", data); // Parsed JSON from Gemini
     alert("Parsing complete! Check console for results.");
       setProgress(100);
     setTimeout(() => {
