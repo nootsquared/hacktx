@@ -2,14 +2,19 @@ import { ElevenLabsClient } from "elevenlabs";
 import fs from 'fs';
 import path from 'path';
 
-const elevenlabs = new ElevenLabsClient({
-  apiKey: process.env.ELEVENLABS_API_KEY,
-});
+function getElevenClient() {
+  const apiKey = process.env.ELEVENLABS_API_KEY;
+  if (!apiKey) {
+    throw new Error('ELEVENLABS_API_KEY missing.');
+  }
+  return new ElevenLabsClient({ apiKey });
+}
 
 const VOICE_ID = "21m00Tcm4TlvDq8ikWAM"; // A default voice, change if you want
 
 export async function getTextToSpeechAudio(text) {
   try {
+    const elevenlabs = getElevenClient();
     const audio = await elevenlabs.generate({
       voice: VOICE_ID,
       text,
@@ -30,6 +35,7 @@ export async function getTextToSpeechAudio(text) {
 
 export async function getTextToSpeechAndSave(text, fileName) {
   try {
+    const elevenlabs = getElevenClient();
     const audio = await elevenlabs.generate({
       voice: VOICE_ID,
       text,

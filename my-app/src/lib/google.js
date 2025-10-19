@@ -1,25 +1,41 @@
 import { google } from 'googleapis';
 import { Buffer } from 'buffer';
 
-// Decode the base64 credentials
-const decodedCredentials = Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS_BASE64, 'base64').toString('utf-8');
-const credentials = JSON.parse(decodedCredentials);
+function getGoogleClients() {
+  const credsB64 = process.env.GOOGLE_APPLICATION_CREDENTIALS_BASE64;
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
 
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  "http://localhost:3000/oauth2callback"
-);
+  if (!clientId || !clientSecret || !refreshToken) {
+    throw new Error('Google API configuration missing.');
+  }
 
-oauth2Client.setCredentials({
-  refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-});
+  // Optional: decode credentials if provided (commonly unused in OAuth2 w/ refresh token flows)
+  if (credsB64) {
+    try {
+      const decodedCredentials = Buffer.from(credsB64, 'base64').toString('utf-8');
+      JSON.parse(decodedCredentials);
+    } catch (e) {
+      console.warn('Invalid GOOGLE_APPLICATION_CREDENTIALS_BASE64; ignoring.');
+    }
+  }
 
-const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
-const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+  const oauth2Client = new google.auth.OAuth2(
+    clientId,
+    clientSecret,
+    "http://localhost:3000/oauth2callback"
+  );
+  oauth2Client.setCredentials({ refresh_token: refreshToken });
+
+  const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+  const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+  return { calendar, gmail };
+}
 
 export async function addEventToCalendar({ summary, startDateTime, endDateTime }) {
   try {
+    const { calendar } = getGoogleClients();
     const event = {
       summary,
       start: { dateTime: startDateTime, timeZone: 'America/Chicago' },
@@ -39,6 +55,7 @@ export async function addEventToCalendar({ summary, startDateTime, endDateTime }
 
 export async function sendEmail({ to, subject, body }) {
     try {
+        const { gmail } = getGoogleClients();
         const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
         const messageParts = [
             `To: ${to}`,

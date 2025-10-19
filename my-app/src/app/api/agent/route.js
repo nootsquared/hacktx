@@ -1,14 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { addEventToCalendar, sendEmail } from "../../../lib/google";
-import { getTextToSpeechAudio } from "../../../lib/elevenlabs";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-// Define the persona and instructions for the AI model.
-const model = genAI.getGenerativeModel({
-  model: "gemini-pro",
-  systemInstruction: "You are a helpful and friendly financial assistant. Your goal is to help the user understand their financial plan based on the provided context, schedule meetings, and send email summaries. You can also provide voice responses. Keep your answers concise and helpful.",
-});
+export const runtime = "nodejs";
 
 // Simplified toolset focusing on in-app user interaction.
 const tools = [
@@ -56,18 +47,40 @@ const tools = [
 ];
 
 const toolFunctions = {
-  add_event_to_calendar: addEventToCalendar,
-  send_email: sendEmail,
+  add_event_to_calendar: async (args) => {
+    const { addEventToCalendar } = await import("../../../lib/google");
+    return addEventToCalendar(args);
+  },
+  send_email: async (args) => {
+    const { sendEmail } = await import("../../../lib/google");
+    return sendEmail(args);
+  },
   speak_response_to_user: async ({ message }) => {
-      const audioBase64 = await getTextToSpeechAudio(message);
-      // Include the original message in the response so the frontend can display it as text.
-      return { success: true, audio: audioBase64, message: message };
+    const { getTextToSpeechAudio } = await import("../../../lib/elevenlabs");
+    const audioBase64 = await getTextToSpeechAudio(message);
+    return { success: true, audio: audioBase64, message };
   },
 };
 
 export async function POST(req) {
   try {
     const { prompt, context } = await req.json();
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      console.error("Missing GEMINI_API_KEY env var");
+      return new Response(JSON.stringify({ error: "Server misconfiguration" }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Lazily initialize the model at request time to avoid build-time crashes
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({
+      model: "gemini-pro",
+      systemInstruction:
+        "You are a helpful and friendly financial assistant. Your goal is to help the user understand their financial plan based on the provided context, schedule meetings, and send email summaries. You can also provide voice responses. Keep your answers concise and helpful.",
+    });
     
     // Start a chat session with the model, including the tools.
     const chat = model.startChat({ tools });
@@ -87,6 +100,7 @@ export async function POST(req) {
       // If no tool is called, the model provides a standard text response.
       // We can also convert this text response to speech.
       const text = result.response.text();
+      const { getTextToSpeechAudio } = await import("../../../lib/elevenlabs");
       const audioBase64 = await getTextToSpeechAudio(text);
       const apiResult = { text, audio: audioBase64 };
       return new Response(JSON.stringify({ result: apiResult, type: 'text_and_audio' }), {
@@ -101,4 +115,3 @@ export async function POST(req) {
     });
   }
 }
-
