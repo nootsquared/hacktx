@@ -1,5 +1,6 @@
 import { Montserrat, Roboto } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/navbar";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${roboto.variable} ${montserrat.variable} antialiased`}>
+        <Navbar />
         {children}
       </body>
     </html>
