@@ -8,43 +8,44 @@ const devs = [
     name: "Pranav Maringanti",
     role: "Lead Frontend Developer",
     imageUrl: "https://placehold.co/128x128/e2e8f0/334155?text=PM",
-    description: "Pranav specializes in React and Next.js, building intuitive user interfaces and bringing complex designs to life with clean, efficient code.",
+    description: "Pranav developed large portions of the frontend code, using Three.js for the 3d models. He also designed the Finance Dashboard, creating a smooth user experience.",
     socials: {
-      github: "https://github.com",
+      github: "https://github.com/nootsquared",
       linkedin: "https://linkedin.com",
       twitter: "https://twitter.com",
     }
   },
   {
     id: 2,
-    name: "Samantha Lee",
-    role: "Backend & AI Engineer",
-    imageUrl: "https://placehold.co/128x128/e2e8f0/334155?text=SL",
-    description: "Samantha architects the powerful backend systems and AI integrations that drive our application, focusing on scalability and performance.",
+    name: "Sameer Agarwal",
+    role: "Frontend and Cloud Specialist",
+    imageUrl: "https://placehold.co/128x128/e2e8f0/334155?text=SA",
+    description: "Sameer integrated the chatbot functionality using Google Gemini with Google Cloud and developed parts of the frontend code with Next.js.",
     socials: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
+      github: "https://github.com/Elitelord",
+      linkedin: "https://linkedin.com/in/sameera07",
     }
   },
   {
     id: 3,
-    name: "David Chen",
-    role: "UI/UX Designer",
-    imageUrl: "https://placehold.co/128x128/e2e8f0/334155?text=DC",
-    description: "David is the creative mind behind the application's look and feel, ensuring a seamless and visually appealing user experience.",
+    name: "Sai Peram",
+    role: "Backend and AI Engineer",
+    imageUrl: "https://placehold.co/128x128/e2e8f0/334155?text=SP",
+    description: "Sai created the Document Parser with Google Gemini to take input from user's paystubs. He then integrated this with the AI plan classification model.",
     socials: {
+      github: "https://github.com/saiperam",  
       linkedin: "https://linkedin.com",
       twitter: "https://twitter.com",
     }
   },
   {
     id: 4,
-    name: "Maria Garcia",
-    role: "DevOps & Cloud Specialist",
-    imageUrl: "https://placehold.co/128x128/e2e8f0/334155?text=MG",
-    description: "Maria ensures our application is always running smoothly by managing our cloud infrastructure and deployment pipelines.",
+    name: "Akhil Kotturi",
+    role: "FullStack Developer",
+    imageUrl: "https://placehold.co/128x128/e2e8f0/334155?text=AK",
+    description: "Akhil ensured our application managed the 3D models and forms along with managing a smooth connection to the backend.",
     socials: {
-      github: "https://github.com",
+      github: "https://github.com/akhilkotturi",
       linkedin: "https://linkedin.com",
     }
   }
