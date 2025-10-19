@@ -1,6 +1,6 @@
 'use client'
 // components/Form.jsx
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 const Form = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]); // To store actual file objects
@@ -75,19 +75,68 @@ const Form = () => {
     e.target.value = ''; // Clear input value so same file can be selected again
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default browser form submission
-    console.log("Form Submitted!");
-    console.log("Files to Upload:", uploadedFiles);
+    // Inside Form.jsx component
+  const handleParseDocument = async () => {
+    if (uploadedFiles.length === 0) return alert("No files to parse");
 
-    if (uploadedFiles.length === 0) {
-        setErrors(["Please select at least one file to upload."]);
-        return;
+    const formData = new FormData();
+    formData.append("file", uploadedFiles[0]); // Just the first file for now
+
+    try {
+      const res = await fetch("http://localhost:8000/parse-document", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      console.log("Parsed Data:", data.parsed_data); // Parsed JSON from Gemini
+      alert("Check console for parsed JSON!");
+    } catch (err) {
+      console.error(err);
+      alert("Error parsing document");
     }
-    alert(`Submitting ${uploadedFiles.length} file(s). Check console for details.`);
-    // Here you would typically send `uploadedFiles` to your backend
-    // Example: sendToServer(uploadedFiles);
   };
+
+
+  const handleSubmit = async (e) => {
+  e.preventDefault(); // Prevent default form submission
+
+  if (uploadedFiles.length === 0) {
+    setErrors(["Please select at least one file to upload."]);
+    return;
+  }
+
+  // Call the Gemini parsing endpoint
+  const formData = new FormData();
+  formData.append("file", uploadedFiles[0]); // Take the first uploaded file
+
+  try {
+    setProgress(10); // Optional: show some progress
+    const res = await fetch("http://localhost:8000/parse-document", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) {
+      throw new Error(`Server error: ${res.status}`);
+    }
+
+    const data = await res.json();
+    console.log("Parsed Data:", data.parsed_data); // Parsed JSON from Gemini
+    alert("Parsing complete! Check console for results.");
+
+    setProgress(100);
+    setShowSuccess(true);
+    setTimeout(() => {
+      setProgress(0);
+      setShowSuccess(false);
+    }, 2000);
+
+  } catch (err) {
+    console.error(err);
+    setErrors(["Error parsing document. Check console for details."]);
+    setProgress(0);
+  }
+};
 
   return (
     <form onSubmit={handleSubmit} className="p-6 bg-white rounded-lg shadow-md max-w-lg mx-auto">
@@ -123,7 +172,7 @@ const Form = () => {
             className="btn px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium" // Adjusted button color
             onClick={() => inputRef.current?.click()} // Programmatically click the hidden input
           >
-            Browse device
+            Upload Paystub for Financial Planning
           </button>
         </div>
       </div>
