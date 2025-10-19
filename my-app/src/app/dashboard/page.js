@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { MyChart } from "@/app/components/chart.jsx";
 import { InfoCard } from "@/app/components/InfoCard.jsx";
 import { SummaryCard } from "@/app/components/SummaryCard.jsx";
-import Navbar from "@/app/components/navbar.jsx";
+import { ResizeNavbar } from "@/app/components/navbar.jsx";
 import { AgentChat } from "@/app/components/AgentChat.jsx";
 
 // This is the main page that combines the dashboard and the AI agent.
@@ -48,7 +48,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
         <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
-            <Navbar />
+            <ResizeNavbar />
             <main className="flex-1 flex items-center justify-center">
                 <div className="text-center">
                     <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">Loading Model Data...</p>
@@ -60,7 +60,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <Navbar />
+      <ResizeNavbar />
       
       <main className="flex-1 p-4 md:p-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto w-full">
