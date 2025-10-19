@@ -293,8 +293,8 @@
   position: absolute;
   left: 10%;
   right: 10%;
-  bottom: 8%;
-  height: 26%;
+  bottom: 60%;
+  height: 40%;
   background:
     radial-gradient(60% 65% at 50% 60%, rgba(0,0,0,0.26), rgba(0,0,0,0.16) 38%, rgba(0,0,0,0.05) 78%, rgba(0,0,0,0) 100%);
   filter: blur(20px);
