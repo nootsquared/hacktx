@@ -17,9 +17,9 @@ const { google } = require('googleapis');
 const readline = require('readline');
 
 // --- IMPORTANT: Fill these in with your credentials ---
-const GOOGLE_CLIENT_ID = "140285542739-2h5llbljiccokbg7qgfa2t6nhfs41nkb.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
-const REDIRECT_URI = 'http://localhost:3000/oauth2callback';
+const GOOGLE_CLIENT_ID = "";
+const GOOGLE_CLIENT_SECRET = "";
+const REDIRECT_URI = '';
 
 // The permissions your agent needs
 const SCOPES = [
