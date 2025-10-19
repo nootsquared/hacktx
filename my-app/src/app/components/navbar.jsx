@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
+import { Label } from "recharts";
 
 const HomeIcon = (props) => (
   <svg
@@ -136,17 +137,21 @@ const Navbar = () => {
               >
                 Finance
               </Link>
+              
             </div>
+            
           </div>
-
-          {/* Right account icon */}
-          <Link
-            href="/dashboard"
-            aria-label="Account"
-            className="text-foreground/90 hover:text-foreground transition-colors"
-          >
-            <AccountIcon className="h-6 w-6" />
-          </Link>
+                <Link
+                href="/aboutPage"
+                onMouseEnter={() => setHoverTab("browse")}
+                className={`flex items-center justify-center rounded-lg px-3 py-1.5 transition-colors duration-200 ${
+                  activeTab === "browse" ? "text-black dark:text-white" : "hover:text-foreground"
+                }`}
+              >
+                <AccountIcon className="h-6 w-6" />
+              </Link>
+          
+          
         </div>
       </nav>
     </div>
