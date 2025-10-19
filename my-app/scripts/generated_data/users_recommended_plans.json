@@ -1,0 +1,68 @@
+{
+  "generated_at": "2025-10-19T02:43:06.012813+00:00",
+  "source": "/Users/pranavmaringanti/Documents/GitHub/hacktx/my-app/scripts/static_data/users_paystub.json",
+  "model": "/Users/pranavmaringanti/Documents/GitHub/hacktx/my-app/scripts/models/plan_selector_keras.keras",
+  "results": [
+    {
+      "user_index": 0,
+      "input_features": {
+        "pay_frequency": "weekly",
+        "gross_pay_per_period": 863.89,
+        "total_taxes_withheld_per_period": 190.52,
+        "total_deductions_per_period": 48.04,
+        "net_pay_per_period": 625.33,
+        "periods_per_month": 4.33,
+        "gross_monthly_income": 3740.64,
+        "net_monthly_income": 2707.68,
+        "effective_tax_rate": 0.2205,
+        "deduction_rate": 0.0556,
+        "income_stability_index": 0.85
+      },
+      "recommendations": [
+        {
+          "plan_id": "36m_2.9",
+          "probability": 0.9968000054359436,
+          "plan": {
+            "plan_id": "36m_2.9",
+            "type": "retail_installment",
+            "term_months": 36,
+            "apr": 0.029,
+            "eligible_credit_bands": [
+              "A",
+              "B"
+            ]
+          }
+        },
+        {
+          "plan_id": "60m_5.9",
+          "probability": 0.0017999999690800905,
+          "plan": {
+            "plan_id": "60m_5.9",
+            "type": "retail_installment",
+            "term_months": 60,
+            "apr": 0.059,
+            "eligible_credit_bands": [
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        },
+        {
+          "plan_id": "36m_lease",
+          "probability": 0.0007999999797903001,
+          "plan": {
+            "plan_id": "36m_lease",
+            "type": "closed_end_lease",
+            "term_months": 36,
+            "apr": 0.029,
+            "eligible_credit_bands": [
+              "A",
+              "B"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

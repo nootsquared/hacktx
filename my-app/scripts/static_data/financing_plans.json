@@ -1,0 +1,117 @@
+{
+  "generated_at": "2025-10-18",
+  "notes": "Offers vary by region & expire; this file captures plan TYPES + sample current offers. Expand per region/model.",
+  "plan_types": [
+    {
+      "type": "retail_installment",
+      "name": "Retail Finance",
+      "description": "Standard auto loan via TFS.",
+      "typical_terms_months": [36, 48, 60, 72, 84],
+      "apr_range_by_credit_band": {
+        "A": [0.029, 0.069],
+        "B": [0.059, 0.099],
+        "C": [0.099, 0.149]
+      },
+      "eligible_vehicle": ["new", "certified_used", "used"],
+      "notes": "Exact APR offered varies by region, model, credit, and promos."
+    },
+    {
+      "type": "closed_end_lease",
+      "name": "Closed-End Lease",
+      "description": "Lease via TFS with fixed term and mileage; option to return or buy at residual.",
+      "typical_terms_months": [24, 36, 39, 42, 48, 60],
+      "mileage_buckets": [10000, 12000, 15000],
+      "eligible_vehicle": ["new", "certified_used"],
+      "fees_notes": "Excess wear and mileage charges may apply at lease end."
+    },
+    {
+      "type": "balloon_preferred_option",
+      "name": "Preferred Option (Balloon)",
+      "description": "Lower monthly payments with large final balloon; option to pay/refi/return per program.",
+      "typical_terms_months": [36, 48],
+      "availability": "Limited states / participating dealers",
+      "eligible_vehicle": ["new", "certified_used", "used"],
+      "notes": "Program availability varies; see TFS materials."
+    },
+    {
+      "type": "certified_used_apr",
+      "name": "Toyota Certified Used APR",
+      "description": "Special APR financing for select Toyota Certified Used models.",
+      "typical_terms_months": [36, 48, 60],
+      "eligible_vehicle": ["certified_used"]
+    }
+  ],
+  "rebates": {
+    "military": {
+      "amount_usd": 500,
+      "eligibility": "Eligible U.S. military personnel & household members; through TFS on new Toyota.",
+      "stacking": "Typically combinable with APR/lease offers; check offer details.",
+      "source": "toyota.com/military-rebate"
+    },
+    "college_grad": {
+      "amount_usd": 500,
+      "eligibility": "Recent college grads; through TFS on new Toyota.",
+      "stacking": "Typically combinable; check region.",
+      "source": "toyota.com/college-rebate"
+    }
+  },
+  "regional_offers_examples": [
+    {
+      "region": "National (example)",
+      "model": "RAV4",
+      "offer_type": "special_apr",
+      "details": { "apr": 0.0475, "term_months": 60 },
+      "expires": null,
+      "source": "toyota.com/deals-incentives/rav4/apr"
+    },
+    {
+      "region": "National (example)",
+      "model": "Tundra",
+      "offer_type": "special_apr",
+      "details": { "apr": 0.0299, "term_months": 72 },
+      "expires": null,
+      "source": "toyota.com/deals-incentives/tundra/apr"
+    },
+    {
+      "region": "Central (example)",
+      "model": "Multiple",
+      "offer_type": "mix_apr_lease",
+      "details": {
+        "apr_examples": [{ "apr": 0.0175, "term_months": 72, "model": "Tundra 2025" }],
+        "lease_examples": [{ "model": "Tacoma SR5 2025", "monthly": 269, "term_months": 36, "due_at_signing": 3659 }]
+      },
+      "expires": "2025-11-03",
+      "source": "toyota.com/central/deals-incentives"
+    },
+    {
+      "region": "Southeast (example)",
+      "model": "Multiple",
+      "offer_type": "apr_matrix",
+      "details": [{ "apr": 0.0199, "term_months": 36 }],
+      "expires": "2025-11-03",
+      "source": "toyota.com/southeasttoyota/deals-incentives"
+    },
+    {
+      "region": "SoCal (example, Certified Used)",
+      "model": "Camry/Corolla/RAV4 (TCUV)",
+      "offer_type": "certified_used_apr",
+      "details": [{ "apr": 0.0499, "term_months": 60 }],
+      "expires": null,
+      "source": "toyota.com/socal/deals-incentives"
+    }
+  ],
+  "protection_products": [
+    { "name": "GAP", "category": "finance/lease add-on", "notes": "Optional; may cover negative equity if vehicle is total loss.", "source": "toyotafinancial.com GAP page" },
+    { "name": "Excess Wear & Use (Lease)", "category": "lease add-on", "notes": "Waives qualifying lease-end wear charges up to program limits.", "source": "toyotafinancial.com EWU page" },
+    { "name": "Vehicle Service Agreements", "category": "service agreement", "notes": "Platinum/Gold/Powertrain plans.", "source": "toyotafinancial.com VSA page" }
+  ],
+  "plans": [
+    { "plan_id": "36m_2.9", "type": "retail_installment", "term_months": 36, "apr": 0.029, "eligible_credit_bands": ["A", "B"] },
+    { "plan_id": "48m_4.9", "type": "retail_installment", "term_months": 48, "apr": 0.049, "eligible_credit_bands": ["A", "B", "C"] },
+    { "plan_id": "60m_5.9", "type": "retail_installment", "term_months": 60, "apr": 0.059, "eligible_credit_bands": ["A", "B", "C"] },
+    { "plan_id": "72m_6.9", "type": "retail_installment", "term_months": 72, "apr": 0.069, "eligible_credit_bands": ["B", "C"] },
+    { "plan_id": "84m_7.9", "type": "retail_installment", "term_months": 84, "apr": 0.079, "eligible_credit_bands": ["B", "C"] },
+    { "plan_id": "36m_lease", "type": "closed_end_lease", "term_months": 36, "apr": 0.029, "eligible_credit_bands": ["A", "B"] },
+    { "plan_id": "48m_balloon", "type": "balloon_preferred_option", "term_months": 48, "apr": 0.049, "eligible_credit_bands": ["A", "B"] }
+  ]
+}
