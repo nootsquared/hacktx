@@ -395,16 +395,17 @@ function ScrollCue({ label }) {
 }
 
 function GarageSpotlight({ model }) {
-  if (!model?.spotlight) return null;
-  const { theme, spotlight } = model;
+  const theme = model?.theme;
+  const spotlight = model?.spotlight;
   const msrpNumber = useMemo(() => {
     try {
-      const digits = String(spotlight.msrp || "").replace(/[^0-9]/g, "");
+      const digits = String(spotlight?.msrp || "").replace(/[^0-9]/g, "");
       return digits ? Number(digits) : undefined;
     } catch {
       return undefined;
     }
-  }, [spotlight.msrp]);
+  }, [spotlight?.msrp]);
+  if (!spotlight) return null;
 
   return (
     <section className="relative -mt-[24vh] bg-gradient-to-b from-white via-neutral-50 to-neutral-100 pb-24 pt-28">

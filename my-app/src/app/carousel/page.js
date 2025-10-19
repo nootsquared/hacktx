@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <>
-    <ResizeNavbar />
+    <Navbar />
     <main className="p-6">
       <div className="max-w-xl">
         <Carousel opts={{ align: "start", loop: true }}>
