@@ -14,6 +14,55 @@ const HomeIcon = (props) => (
     <path d="M12 3.172 3.172 12A4 4 0 0 0 2 14.828V20a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-3h4v3a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-5.172A4 4 0 0 0 20.828 12L12 3.172Z" />
   </svg>
 );
+const AppIcon = ({ size = 64 }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-labelledby="app-icon-title"
+      role="img"
+    >
+      <title id="app-icon-title">Toyota Financial Journey App Icon</title>
+      
+      {/* Background Rounded Square */}
+      <rect width="100" height="100" rx="22" fill="#1A1A1A" />
+      
+      {/* Red Circle Accent */}
+      <circle cx="50" cy="50" r="38" fill="#D32F2F" />
+
+      {/* Upward Arrow / Path */}
+      <path
+        d="M25 75 Q50 75 50 50 Q50 25 75 25"
+        fill="none"
+        stroke="rgba(255, 255, 255, 0.8)"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+      {/* Arrowhead */}
+      <path
+        d="M68 20 L75 25 L68 30"
+        fill="none"
+        stroke="rgba(255, 255, 255, 0.8)"
+        strokeWidth="6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      
+      {/* Stylized Car Shape */}
+      <g transform="translate(20, 52) rotate(-20)">
+        <path
+          d="M0 10 C 5 0, 25 0, 30 10 L 30 15 L 0 15 Z"
+          fill="#FFFFFF"
+        />
+        <circle cx="7" cy="15" r="3" fill="#1A1A1A" />
+        <circle cx="23" cy="15" r="3" fill="#1A1A1A" />
+      </g>
+
+    </svg>
+  );
+};
 
 const AccountIcon = (props) => (
   <svg
@@ -42,7 +91,7 @@ const Navbar = () => {
             aria-label="Home"
             className="text-foreground/90 hover:text-foreground transition-colors"
           >
-            <HomeIcon className="h-6 w-6" />
+            <AppIcon className="h-6 w-6" />
           </Link>
 
           {/* Center tabs */}
@@ -66,7 +115,7 @@ const Navbar = () => {
                 Browse
               </Link>
               <Link
-                href="/finance"
+                href="/dashboard"
                 onMouseEnter={() => setHoverTab("finance")}
                 className={`flex items-center justify-center rounded-lg px-3 py-1.5 transition-colors duration-200 ${
                   activeTab === "finance" ? "text-black dark:text-white" : "hover:text-foreground"
