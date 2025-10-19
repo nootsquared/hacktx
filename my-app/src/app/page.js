@@ -23,7 +23,7 @@ const garageModels = [
       cameraTarget: "0m -0.02m 0m",
       fieldOfView: "18deg",
   rotationPerSecond: "14deg",
-  stageHeightVh: 100,
+      stageHeightVh: 82,
       stageMaxWidth: "1120px",
     },
     spotlight: {
@@ -71,7 +71,7 @@ const garageModels = [
       cameraTarget: "0m -0.02m 0m",
       fieldOfView: "19deg",
   rotationPerSecond: "14deg",
-  stageHeightVh: 100,
+      stageHeightVh: 84,
       stageMaxWidth: "1120px",
     },
     spotlight: {
@@ -119,7 +119,7 @@ const garageModels = [
       cameraTarget: "0m -0.03m 0m",
       fieldOfView: "19deg",
   rotationPerSecond: "14deg",
-  stageHeightVh: 100,
+      stageHeightVh: 84,
       stageMaxWidth: "1120px",
     },
     spotlight: {
@@ -167,7 +167,7 @@ const garageModels = [
       cameraTarget: "0m -0.03m 0m",
       fieldOfView: "18deg",
   rotationPerSecond: "14deg",
-  stageHeightVh: 100,
+      stageHeightVh: 84,
       stageMaxWidth: "1120px",
     },
     spotlight: {
@@ -257,7 +257,7 @@ function HeroShowcase({ models, activeIndex, onActiveIndexChange }) {
     cameraTarget: "0m -0.02m 0m",
     fieldOfView: "18deg",
   rotationPerSecond: "14deg",
-  stageHeightVh: 100,
+    stageHeightVh: 82,
     stageMaxWidth: "1120px",
   };
 
@@ -371,10 +371,10 @@ function HeroModelStage({ model, heroView, onPrev, onNext, hasMultiple }) {
           cameraOrbit={heroView?.cameraOrbit}
           cameraTarget={heroView?.cameraTarget}
           fieldOfView={heroView?.fieldOfView}
-          className="mx-auto mt-12"
+          className="mx-auto mt-2"
         />
 
-        <div className="mt-4 text-center">
+  <div className="mt-1 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.48em] text-neutral-400">{model.badge}</p>
           <p className="mt-2 text-2xl font-semibold tracking-tight text-neutral-900 sm:text-[2.4rem]">{model.name}</p>
           <p className="mt-2 text-sm uppercase tracking-[0.34em] text-neutral-500">{model.tagline}</p>
