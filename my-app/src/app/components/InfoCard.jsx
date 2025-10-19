@@ -22,14 +22,14 @@ export function InfoCard({ data }) {
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <div className="relative aspect-video w-full overflow-hidden rounded-lg">
-          <Image
+          {/* <Image
             src={""}
             alt={data.alt}
             fill
             className="object-cover"
             // Add a fallback for broken images
             onError={(e) => { e.currentTarget.src = ''; }}
-          />
+          /> */}
         </div>
         <p className="text-sm text-muted-foreground">
           {data.description}
