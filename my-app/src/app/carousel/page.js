@@ -6,7 +6,7 @@ import {
 import {
   Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter
 } from "../components/ui/card"
-import { Navbar } from "../components/navbar";
+import Navbar from "../components/navbar";
 export default function Page() {
   const items = [1,2,3,4,5]
 
