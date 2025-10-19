@@ -1,0 +1,18 @@
+# Minimal Python dependencies for the financing plan selector scripts.
+# Use with a virtual environment:
+#   python -m venv .venv
+#   source .venv/bin/activate
+#   python -m pip install --upgrade pip
+#   pip install -r my-app/scripts/requirements.txt
+
+numpy==2.3.4
+scipy==1.16.2
+scikit-learn==1.7.2
+joblib==1.5.2
+
+# Deep learning (Keras 3 on TensorFlow 2.20)
+tensorflow==2.20.0
+keras==3.11.3
+
+# Optional: for serving the API endpoints in plan_selector_service.py
+Flask==3.1.2
