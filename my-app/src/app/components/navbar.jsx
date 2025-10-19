@@ -77,7 +77,11 @@ const AccountIcon = (props) => (
 
 const Navbar = () => {
   const pathname = usePathname();
-  const routeTab = useMemo(() => (pathname === "/finance" ? "finance" : "browse"), [pathname]);
+  const routeTab = useMemo(() => (
+    pathname && (pathname.startsWith("/finance") || pathname.startsWith("/dashboard"))
+      ? "finance"
+      : "browse"
+  ), [pathname]);
   const [hoverTab, setHoverTab] = useState(null);
   const activeTab = hoverTab ?? routeTab;
 
