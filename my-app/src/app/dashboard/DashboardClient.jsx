@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import PaymentSimulation from '@/app/components/PaymentSimulation.jsx';
-import { AgentChat } from '@/app/components/AgentChat 2.jsx';
+import { AgentChat } from '@/app/components/AgentChat.jsx';
 
 const PLAN_METADATA = {
   PlanA: { APR: 3.2, Term_Months: 24, Type: "lease", downPayment: 2000 },

@@ -48,7 +48,7 @@ export default function FinanceIntakeClient() {
     try{
       p = Math.min(100, p + Math.floor(6 + Math.random() * 12));
       setProgress(p);
-      const res = await fetch("http://localhost:8000/parse-document", {
+      const res = await fetch("https://hacktx25helper-1.onrender.com/parse-document", {
       method: "POST",
       body: formData,
     });
@@ -60,7 +60,6 @@ export default function FinanceIntakeClient() {
     
     setModelIn(data);
     console.log("Parsed Data:", data);
-    alert("Parsing complete! Check console for results.");
       setProgress(100);
     setTimeout(() => {
       setProcessing(false);
