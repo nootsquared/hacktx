@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import PaymentSimulation from '@/app/components/PaymentSimulation.jsx';
-import { AgentChat } from '@/app/components/AgentChat 2.jsx';
+import { AgentChat } from '@/app/components/AgentChat.jsx';
 
 // --- NEW: This metadata would likely live in a separate config file ---
 const PLAN_METADATA = {

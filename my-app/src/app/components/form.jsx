@@ -83,7 +83,7 @@ const Form = () => {
     formData.append("file", uploadedFiles[0]); // Just the first file for now
 
     try {
-      const res = await fetch("http://localhost:8000/parse-document", {
+      const res = await fetch("https://hacktx25helper-1.onrender.com/parse-document", {
         method: "POST",
         body: formData,
       });
@@ -111,7 +111,7 @@ const Form = () => {
 
   try {
     setProgress(10); // Optional: show some progress
-    const res = await fetch("http://localhost:8000/parse-document", {
+    const res = await fetch("https://hacktx25helper-1.onrender.com/parse-document", {
       method: "POST",
       body: formData,
     });
