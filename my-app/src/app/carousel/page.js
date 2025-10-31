@@ -6,13 +6,13 @@ import {
 import {
   Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter
 } from "../components/ui/card"
-import { ResizeNavbar } from "../components/navbar";
+import Navbar from "../components/navbar";
 export default function Page() {
   const items = [1,2,3,4,5]
 
   return (
     <>
-    <ResizeNavbar />
+    <Navbar />
     <main className="p-6">
       <div className="max-w-xl">
         <Carousel opts={{ align: "start", loop: true }}>
